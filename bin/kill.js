@@ -1,3 +1,7 @@
+import execPkg from "child_process";
+import iconv from "iconv-lite";
+import debugPkg from "debug";
+
 const isWin = process.platform === "win32";
 const isLinux = process.platform === "linux";
 const isDarwin = process.platform === "darwin";
@@ -7,9 +11,8 @@ const cmd = isWin
     ? "netstat -ntpl | grep"
     : "lsof -i :";
 
-const exec = require("child_process").exec;
-const iconv = require("iconv-lite");
-const debug = require("debug")("kill");
+const debug = debugPkg("kill");
+const exec = execPkg.exec;
 
 const getText = t => iconv.decode(Buffer.from(t, "binary"), "cp936");
 
@@ -100,4 +103,4 @@ const kill = (port = 8080) => {
   });
 };
 
-module.exports = kill;
+export default kill;

@@ -1,14 +1,18 @@
 #!/usr/bin/env node
 
-const http = require("http");
-const portFinder = require("portfinder");
-const chalk = require("chalk");
-const app = require("../app");
-const pkg = require("../package.json");
-const config = require("../config");
-const kill = require("./kill");
-const debug = require("debug")(pkg.name + ":serve");
+import http from "http";
+import portFinder from "portfinder";
+import chalk from "chalk";
+import app from "../app.js";
+import config from "../config/index.js";
+import kill from "./kill.js";
+import debugFn from "debug";
+import fs from "fs";
 
+const pkgText = fs.readFileSync("./package.json", "utf8");
+const pkgJson = JSON.parse(pkgText);
+
+const debug = debugFn(pkgJson.name + ":serve");
 const port = normalizePort(config.port || process.env.PORT || "3000");
 const host = config.host || process.env.HOST;
 const server = http.createServer(app.callback());
@@ -48,9 +52,11 @@ function onError(error) {
     case "EACCES":
       console.error(bind + " requires elevated privileges");
       process.exit(1);
+      break;
     case "EADDRINUSE":
       console.error(bind + " is already in use");
       process.exit(1);
+      break;
     default:
       throw error;
   }

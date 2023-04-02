@@ -1,17 +1,16 @@
-const Koa = require("koa");
-const json = require("koa-json");
-const logger = require("koa-logger");
-const onerror = require("koa-onerror");
-const bodyParser = require("koa-body");
-const compress = require("koa-compress");
-const cors = require("koa2-cors");
-const errorPage = require("./app/middleware/error-page");
-const autoRouter = require("./app/middleware/auto-router");
-const nunjucks = require("./app/middleware/nunjucks");
-const sequelize = require("./app/middleware/sequelize");
-
-const config = require("./config");
-const fetch = require("./app/middleware/fetch");
+import Koa from "koa";
+import json from "koa-json";
+import logger from "koa-logger";
+import onerror from "koa-onerror";
+import bodyParser from "koa-body";
+import compress from "koa-compress";
+import cors from "koa2-cors";
+import errorPage from "./app/middleware/error-page.js";
+import autoRouter from "./app/middleware/auto-router.js";
+import nunjucks from "./app/middleware/nunjucks.js";
+import sequelize from "./app/middleware/sequelize.js";
+import fetch from "./app/middleware/fetch.js";
+import config from "./config/index.js";
 
 const app = new Koa();
 
@@ -59,4 +58,4 @@ if (config.useDatabase) {
 // 自动加载路由
 autoRouter(app);
 
-module.exports = app;
+export default app;

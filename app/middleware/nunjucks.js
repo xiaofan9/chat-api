@@ -1,8 +1,8 @@
-const nunjucks = require("nunjucks");
-const fs = require("fs-extra");
-const { extname, join } = require("path");
+import nunjucks from "nunjucks";
+import fs from "fs-extra";
+import { extname, join } from "path";
 
-module.exports = ({
+export default ({
   path = join(process.cwd(), "app/view"),
   extension = "njk",
   type = "text/html",
@@ -29,8 +29,6 @@ module.exports = ({
   };
 };
 
-exports.createEnv = createEnv;
-
 function autoAdd(handle, obj, { isCover = false, hasHandle = () => false } = {}) {
   if (obj) {
     try {
@@ -49,7 +47,7 @@ function autoAdd(handle, obj, { isCover = false, hasHandle = () => false } = {})
  * @param {object} opts FileSystemLoader选项参数； opts.filters, opts.extensions, opts.globals存在，将自动添加到Environment上
  * @param {object} conf Environment config配置参数
  */
-function createEnv(path, opts, conf) {
+export function createEnv(path, opts, conf) {
   const env = new nunjucks.Environment(
     new nunjucks.FileSystemLoader(path, {
       watch: opts.watch,

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   name: 'test',
   type: 'mysql',
   host: 'test.com',

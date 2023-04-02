@@ -1,5 +1,3 @@
-const crypto = require("crypto");
+import crypto from "crypto";
 
-const md5 = (content) => crypto.createHash("md5").update(content).digest("hex");
-
-exports.md5 = md5;
+export const md5 = (content) => crypto.createHash("md5").update(content).digest("hex");

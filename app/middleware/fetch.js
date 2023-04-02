@@ -1,5 +1,5 @@
-const { cAxios } = require("v-axios");
+import { cAxios } from "v-axios";
 
-module.exports = async (app) => {
+export default async (app) => {
   app.context.fetch = cAxios();
 };

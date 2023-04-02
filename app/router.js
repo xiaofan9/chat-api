@@ -1,5 +1,9 @@
-const conversation = require("./controller/conversation");
+import conversationController from "./controller/conversation.js";
 
-module.exports = (router) => {
-  router.get("/conversation", ctx => conversation(ctx).postMessage());
+export default (router) => {
+  router.post("/conversation", async (ctx, next) => {
+    await conversationController(ctx).postMessage();
+
+    next();
+  });
 };

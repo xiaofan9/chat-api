@@ -1,19 +1,24 @@
-const chat = import("@waylaidwanderer/chatgpt-api");
+import { BingAIClient } from "@waylaidwanderer/chatgpt-api";
+import { getSingleExample } from "../utils/index.js";
 
-module.exports = {
-  async postMessage(ctx) {
-    const { BingAIClient } = await chat;
+class ConversationService {
+  constructor (ctx) {
+    this.ctx = ctx;
+  }
+
+  async postMessage() {
+    const { clientOptions = {} } = this.ctx.request.body || {};
     const options = {
       // Necessary for some people in different countries, e.g. China (https://cn.bing.com)
-      host: "",
+      host: clientOptions.host || "",
       // "_U" cookie from bing.com
       userToken: "",
       // If the above doesn't work, provide all your cookies as a string instead
-      cookies: "",
+      cookies: clientOptions.cookies || "",
       // A proxy string like "http://<ip>:<port>"
       proxy: "",
       // (Optional) Set to true to enable `console.debug()` logging
-      debug: false,
+      debug: true,
     };
 
     const cacheOptions = {
@@ -47,5 +52,7 @@ module.exports = {
     );
 
     return jailbreakResponse;
-  },
-};
+  }
+}
+
+export default ctx => getSingleExample(ConversationService, ctx);

@@ -1,9 +1,9 @@
 {
-  // 代码等级 0/off 禁用 1/warn 警告 2/error 错误
   "root": true, //  eslint找到这个标识后，不会再去父文件夹中找eslint的配置文件
   "env": {
     // 定义预定义的全局变量,比如browser: true，这样你在代码中可以放心使用宿主环境给你提供的全局变量。
-    "commonjs": true,
+    // "commonjs": true,
+    // "browser": true,
     "es6": true,
     "node": true,
     "mocha": true

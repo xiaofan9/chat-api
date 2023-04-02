@@ -1,9 +1,9 @@
-const fs = require("fs");
-const lodash = require("lodash");
-const path = require("path");
+import fs from "fs";
+import lodash from "lodash";
+import path from "path";
 
-const { Sequelize } = require("sequelize");
-const dbConfig = require("../../config/db");
+import { Sequelize } from "sequelize";
+import dbConfig from "../../config/db.js";
 
 const autoLoadModel = async (ctx, next) => {
   try {
@@ -34,7 +34,7 @@ const autoLoadModel = async (ctx, next) => {
   await next();
 };
 
-module.exports = async (app) => {
+export default async (app) => {
   // 这里使用环境变量，一般情况使用dbConfig配置即可
   const sequelize = new Sequelize(
     process.env.DB_NAME ?? dbConfig.name,
