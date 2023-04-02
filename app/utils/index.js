@@ -11,6 +11,19 @@ const urlResolve = (...urls) => {
   return nUrl;
 };
 
+const getSingleExample = (Cls, ctx) => {
+  let instance;
+
+  if (!instance) {
+    instance = new Cls();
+  }
+
+  instance.ctx = ctx;
+
+  return instance;
+};
+
 module.exports = {
-  urlResolve
-}
+  urlResolve,
+  getSingleExample,
+};
