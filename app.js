@@ -27,9 +27,10 @@ onerror(app);
 // gzip 压缩
 app.use(
   async (ctx, next) => {
-    console.log(ctx.req.headers);
     const useEventStream = ctx.req.headers.accept === "text/event-stream";
     ctx.useEventStream = useEventStream;
+
+    console.log("useEventStream", useEventStream);
 
     if (!useEventStream) {
       await compress({
