@@ -6,17 +6,38 @@ class ConversationController {
   }
 
   async postMessage() {
-    try {
-      const res = await conversationService(this.ctx).postMessage();
+    const handleRes = async(cb) => {
+      let data = {};
+
+      try {
+        const res = await conversationService(this.ctx).postMessage();
+
+        data = res;
+      } catch (err) {
+        console.error(err);
+        data = {
+          error: err.message ?? "服务器出错了",
+        };
+      }
+
+      if (!this.ctx.useEventStream) {
+        return data;
+      } else {
+        const msgType = data?.error ? "error" : "result";
+
+        this.ctx.app.emit("stream-content", msgType, data);
+        this.ctx.app.emit("stream-end");
+      }
+    };
+
+    if(!this.ctx.useEventStream) {
+      const res = await handleRes();
 
       this.ctx.body = res;
-    } catch (err) {
-      console.error(err);
-      this.ctx.status = 500;
-      this.ctx.body = {
-        code: 500,
-        msg: err.message ?? "服务器出错了",
-      };
+      this.ctx.status = res?.error ? 500 : 200;
+    } else {
+      this.ctx.app.emit("stream-content", "message", "");
+      handleRes();
     }
   }
 }

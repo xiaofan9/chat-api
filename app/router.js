@@ -1,9 +1,9 @@
 const conversation = require("./controller/conversation");
 
 module.exports = (router) => {
-  router.post("/conversation", (ctx) => conversation(ctx).postMessage());
+  router.post("/conversation", async (ctx) => await conversation(ctx).postMessage());
 
-  router.get("/test", async (ctx) => {
+  router.get("/test", (ctx) => {
     ctx.body = "test message";
   });
 };
